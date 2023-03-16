@@ -48,8 +48,7 @@ t_ENLACE=r'\;|\:=|\='
 
 '''t_DIVIDE = r'/'
 t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_SPACE= r'\  '''
+t_RPAREN = r'\)'''
 
 ''' Define a regular expression for the DIGITO token 
 needs to be ordered in a specific way'''
