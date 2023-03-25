@@ -20,11 +20,11 @@ t_ENLACE=r'\;|:=|\='
 
 # Define a regular expression 
 def t_ID(t):
-    r'{LETRA}|{LETRA}({t_IDCONT})*'
+    r'{t_LETRA}|{t_LETRA}({t_IDCONT})*'
     t.value = str(t.value)
     return t
 def t_IDCONT(t):
-    r'{LETRA}({LETRA}(?P<idcont>{t_IDCONT})|{DIGITO}(?P<idcont>{t_IDCONT}))*'
+    r'{t_LETRA}({LETRA}(?P<idcont>{t_IDCONT})|{DIGITO}(?P<idcont>{t_IDCONT}))*'
     t.value = str(t.value)
     return t
 def t_TIPO(t):
