@@ -1,61 +1,25 @@
 import ply.lex as lex
 
 # Define the list of token names
-tokens = [
+tokens = (
+    'IDCONT',
     'LETRA',
     'DIGITO',
     'VALENCIA',
     'TIPO',
     'ENLACE',
-    'FIN_DE_LINEA',
-        
-        
-    'DECLARACION_DE_VARIABLE',
-    'ID',
-    'IDCONT',
-    
-    
-    'OPERACION_CON_MODELO',
-    'OPERACION',
-    'GRAFICAR',
-    'PROPIEDADES_FISICAS',
+    'FIN_DE_LINEA'
     
 
-    'SENTENCIA',
-    'SENTENCIAS',
-
-    
-    'DEFINICION_DEL_MODELO',
-    'MODELO_MOLECULAR',
-    'ELEMENTO_QUIMICO',
-    'ELEMENTO',
-    
-    'CADENA_MOLECULAR',
-    'CADENA_ATOMICA',
-    'GRUPO_FUNCIONAL',
-    'GRUPO_FUNCIONAL_SUPERIOR',
-    'GRUPO_FUNCIONAL_INFERIOR',
-    
-    
-    'COMPUESTO',
-    'COMPUESTOS',
-    'MODELO_GRUPO_FUNCIONAL'
-]
-
+)
 
 # Define the regular expression for each token
 t_FIN_DE_LINEA=r'\;|\:'
 t_ENLACE=r'\;|\:=|\='
 
-'''t_DIVIDE = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_SPACE= r'\  '''
-
-''' Define a regular expression for the DIGITO token 
-needs to be ordered in a specific way'''
-def t_ID(t):
-    t_LETRA|t_DIGITO
+# Define a regular expression 
+def t_IDCONT(t):
+    r'{t_LETRA}({t_LETRA}|{t_DIGITO})+'
     return t 
 
 def t_TIPO(t):
