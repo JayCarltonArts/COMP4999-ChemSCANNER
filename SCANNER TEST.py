@@ -42,16 +42,22 @@ tokens = [
     'MODELO_GRUPO_FUNCIONAL'
 ]
 
+
 # Define the regular expression for each token
 t_FIN_DE_LINEA=r'\;|\:'
 t_ENLACE=r'\;|\:=|\='
 
 '''t_DIVIDE = r'/'
 t_LPAREN = r'\('
-t_RPAREN = r'\)'''
+t_RPAREN = r'\)'
+t_SPACE= r'\  '''
 
 ''' Define a regular expression for the DIGITO token 
 needs to be ordered in a specific way'''
+def t_ID(t):
+    t_LETRA|t_DIGITO
+    return t 
+
 def t_TIPO(t):
     r'modelo'
     return t
@@ -61,13 +67,14 @@ def t_VALENCIA(t):
     return t
 def t_DIGITO(t):
     r'\d'#Any digit from 0-9
-    t.value = int(t.value)
+    t.value =int(t.value)
     return t
 
 def t_LETRA(t):
     r'[a-zA-Z]'
-    t.value = str(t.value)
+    t.value=str(t.value)
     return t
+
 
 
 # Define a rule to handle whitespace
@@ -87,5 +94,8 @@ lexer = lex.lex()
 # Test the lexer
 Raw = input('WRITE:' )
 lexer.input(Raw)
-for tok in lexer:
+while True:
+    tok = lexer.token()
+    if not tok: 
+        break      # No more input
     print(tok)
