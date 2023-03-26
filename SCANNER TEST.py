@@ -46,8 +46,6 @@ t_VALENCIA= r'[1-9]'#Any digit from 0-9
 t_IDCONT = t_LETRA + r'|' + r'(' + t_LETRA + r')' + t_LETRA + r'|' + t_DIGITO + r'|' + r'(' + t_DIGITO + r')' + t_LETRA 
 t_ID = t_LETRA + r'|' + r'(' + t_LETRA + r')' + t_IDCONT
 
-    
-
 # Define a rule to handle whitespace
 t_ignore = ' \t\n'
 
@@ -68,31 +66,10 @@ t_GRUPO_FUNCIAL_INFERIOR= r'[' + t_MODELO_GRUPO_FUNCIONAL + r']'
 
 t_GRUPO_FUNCIONAL_SUPERIOR= r'(' + t_MODELO_GRUPO_FUNCIONAL + r')'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 t_SENTENCIA= r'defina' + r'(' + t_ID + r')' + r'como' + r'(' + t_TIPO + r'|' + t_ID + r')' + r'=' + r'('+ t_MODELO_MOLECULAR + r'|' {t_OPERACION}) ({ID})'
 
 t_SENTENCIAS (t):
     t_SENTENCIA (t_FIN_DE_LINEA)(t_SENTENCIAS) | t_SENTENCIA(t_FIN_DE_LINEA)
-
-
-
-
-
 
 # Define a function to handle errors
 def t_error(t):
@@ -102,8 +79,9 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
-# Test the lexer
-Raw = input('WRITE:' )
-lexer.input(Raw)
+with open ('error_cases.txt','r') as file:
+    in = file.read()
+
+lexer.input(in)
 for tok in lexer:
     print(f"Matched TOKEN: {tok.type}: {tok.value}")
