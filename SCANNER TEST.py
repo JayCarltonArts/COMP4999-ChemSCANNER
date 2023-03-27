@@ -3,8 +3,8 @@ from ply.lex import Token
 import re
 # Define the list of token names
 tokens = (
-    # 'ID',
-    # 'IDCONT',
+    'ID',
+    'IDCONT',
     'LETRA',
     'DIGITO',
     'VALENCIA',
@@ -42,9 +42,9 @@ t_ELEMENTO_QUIMICO= r'Ag|Al|Ar|As|At|Au|Ba|Be|Bh|Bi|Br|Ca|Cd|Cl|Co|Cr|Cs|Cu|Db|F
 t_TIPO= r'modelo'
 t_OPERACION=r'graficar2d|graficar3d|pesomolecular'
 t_VALENCIA= r'[1-9]'
-t_ELEMENTO = t_ELEMENTO_QUIMICO +r'|'+t_ELEMENTO_QUIMICO+ r'(' + t_VALENCIA + r')'
-#t_IDCONT = r'\w+' + r'|' + r'(' + r'\w+' + r')' + r'\w+' + r'|' + r'\d+' + r'|' + r'(' + r'\d+' + r')' + r'\w+' 
-#t_ID = r'\w+' + r'|' + r'(' + r'\w+' + r')' + t_IDCONT
+t_ELEMENTO = r'(' + t_ELEMENTO_QUIMICO + r')(' + t_VALENCIA + r')?'
+t_IDCONT = r'\w+' + r'|' + r'(' + r'\w+' + r')' + r'\w+' + r'|' + r'\d+' + r'|' + r'(' + r'\d+' + r')' + r'\w+' 
+t_ID = r'\w+' + r'|' + r'(' + r'\w+' + r')' + t_IDCONT
 
     
 
