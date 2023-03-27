@@ -4,12 +4,12 @@ import re
 # Define the list of token names
 tokens = (
     'ID',
-    'IDCONT',
+#    'IDCONT',
     'LETRA',
     'DIGITO',
     'VALENCIA',
     'TIPO',
-    'ENLACE',
+    'ASIGNACION',
     'FIN_DE_LINEA',
     'ELEMENTO_QUIMICO',
     # 'DECLARACION_DE_VARIABLE',
@@ -21,7 +21,7 @@ tokens = (
     # 'SENTENCIAS',
     # 'DEFINICION_DEL_MODELO',
     # 'MODELO_MOLECULAR',
-    'ELEMENTO'
+    #'ELEMENTO',
     # 'CADENA_MOLECULAR',
     # 'CADENA_ATOMICA',
     # 'GRUPO_FUNCIONAL',
@@ -30,21 +30,28 @@ tokens = (
     # 'COMPUESTO',
     # 'COMPUESTOS',
     # 'MODELO_GRUPO_FUNCIONAL'
+    'PARAENTESIS_IZQ',
+    'PARAENTESIS_DER',
+    'PALABRAS_RESERVADAS'
 )
 
 # Define the regular expression for each token
 t_FIN_DE_LINEA=r'\;|\:'
-t_ENLACE=r'\;|:=|\='
+t_ASIGNACION=r'\-|\:\:|\:|\='
 
 # Define a regular expression 
-
-t_ELEMENTO_QUIMICO= r'Ag|Al|Ar|As|At|Au|Ba|Be|Bh|Bi|Br|Ca|Cd|Cl|Co|Cr|Cs|Cu|Db|Fe|Fr|Ga|Ge|He|Hf|Hg|Hn|Ir|Jl|Kr|Li|ln|Mg|Mn|Mo|Mt|Na|Nb|Ne|Ni|Os|Pb|Pd|Po|Pt|Ra|Rb|Re|Rf|Rh|Rn|Ru|Sb|Sc|Se|Si|Sn|Sr|Ta|Tc|Te|Ti|Tl|Xe|Zn|Zr|B|C|F|H|I|K|N|O|P|S|V|W|Y'
+t_ID = r'[A-Za-z]+[0-9]*'
 t_TIPO= r'modelo'
+t_PALABRAS_RESERVADAS=r'inicio|defina|como|fin'
+t_PARAENTESIS_IZQ= r'\('
+t_PARAENTESIS_DER= r'\)'
+t_ELEMENTO_QUIMICO= r'Ag|Al|Ar|As|At|Au|Ba|Be|Bh|Bi|Br|Ca|Cd|Cl|Co|Cr|Cs|Cu|Db|Fe|Fr|Ga|Ge|He|Hf|Hg|Hn|Ir|Jl|Kr|Li|ln|Mg|Mn|Mo|Mt|Na|Nb|Ne|Ni|Os|Pb|Pd|Po|Pt|Ra|Rb|Re|Rf|Rh|Rn|Ru|Sb|Sc|Se|Si|Sn|Sr|Ta|Tc|Te|Ti|Tl|Xe|Zn|Zr|B|C|F|H|I|K|N|O|P|S|V|W|Y'
+
 t_OPERACION=r'graficar2d|graficar3d|pesomolecular'
 t_VALENCIA= r'[1-9]'
-t_ELEMENTO = r'(' + t_ELEMENTO_QUIMICO + r')(' + t_VALENCIA + r')?'
-t_IDCONT = r'\w+' + r'|' + r'(' + r'\w+' + r')' + r'\w+' + r'|' + r'\d+' + r'|' + r'(' + r'\d+' + r')' + r'\w+' 
-t_ID = r'\w+' + r'|' + r'(' + r'\w+' + r')' + t_IDCONT
+#t_ELEMENTO = r'(' + t_ELEMENTO_QUIMICO + r')(' + t_VALENCIA + r')?'
+#t_IDCONT = r'\w+|(\w+)\w+|\d+|(\d+)\w+' 
+
 
     
 
