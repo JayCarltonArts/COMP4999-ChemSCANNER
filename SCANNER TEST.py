@@ -35,31 +35,44 @@ tokens = (
     'PALABRAS_RESERVADAS'
 )
 
+
+
+# Define a regular expression 
+
+def t_TIPO(t):
+    r'modelo'
+    return t
+def t_PALABRAS_RESERVADAS(t):
+    r'inicio|defina|como|fin'
+    return t
+
+def t_ELEMENTO_QUIMICO(t):
+    r'Ag|Al|Ar|As|At|Au|Ba|Be|Bh|Bi|Br|Ca|Cd|Cl|Co|Cr|Cs|Cu|Db|Fe|Fr|Ga|Ge|He|Hf|Hg|Hn|Ir|Jl|Kr|Li|ln|Mg|Mn|Mo|Mt|Na|Nb|Ne|Ni|Os|Pb|Pd|Po|Pt|Ra|Rb|Re|Rf|Rh|Rn|Ru|Sb|Sc|Se|Si|Sn|Sr|Ta|Tc|Te|Ti|Tl|Xe|Zn|Zr|B|C|F|H|I|K|N|O|P|S|V|W|Y'
+    return t
+
+def t_OPERACION(t):
+    r'graficar2d|graficar3d|pesomolecular'
+    return t
+def t_VALENCIA(t):
+    r'[1-9]'
+    return t
+
+
+
 # Define the regular expression for each token
 t_FIN_DE_LINEA=r'\;|\:'
 t_ASIGNACION=r'\-|\:\:|\:|\='
-
-# Define a regular expression 
-t_ID = r'[A-Za-z]+[0-9]*'
-t_TIPO= r'modelo'
-t_PALABRAS_RESERVADAS=r'inicio|defina|como|fin'
 t_PARAENTESIS_IZQ= r'\('
 t_PARAENTESIS_DER= r'\)'
-t_ELEMENTO_QUIMICO= r'Ag|Al|Ar|As|At|Au|Ba|Be|Bh|Bi|Br|Ca|Cd|Cl|Co|Cr|Cs|Cu|Db|Fe|Fr|Ga|Ge|He|Hf|Hg|Hn|Ir|Jl|Kr|Li|ln|Mg|Mn|Mo|Mt|Na|Nb|Ne|Ni|Os|Pb|Pd|Po|Pt|Ra|Rb|Re|Rf|Rh|Rn|Ru|Sb|Sc|Se|Si|Sn|Sr|Ta|Tc|Te|Ti|Tl|Xe|Zn|Zr|B|C|F|H|I|K|N|O|P|S|V|W|Y'
-
-t_OPERACION=r'graficar2d|graficar3d|pesomolecular'
-t_VALENCIA= r'[1-9]'
-#t_ELEMENTO = r'(' + t_ELEMENTO_QUIMICO + r')(' + t_VALENCIA + r')?'
-#t_IDCONT = r'\w+|(\w+)\w+|\d+|(\d+)\w+' 
+t_ID=r'[A-Za-z]+\d*'    
 
 
-    
-
-# Define a rule to handle whitespace
-t_ignore = ' \t\n'
 
 # Definir las reglas de produccion
 '''
+t_ELEMENTO = r'(' + t_ELEMENTO_QUIMICO + r')(' + t_VALENCIA + r')?'
+t_IDCONT = r'\w+|(\w+)\w+|\d+|(\d+)\w+'
+
 
 
 
@@ -88,7 +101,8 @@ t_SENTENCIAS=t_SENTENCIA + r'(' + t_FIN_DE_LINEA+r')+'+ r'|' +t_SENTENCIA+r'('+t
 def t_error(t):
     print(f"Error: Illegal character 't.value[0]'")
     t.lexer.skip(1)
-
+# Define a rule to handle whitespace
+t_ignore = ' \t\n'
 # Build the lexer
 lexer = lex.lex()
 
