@@ -46,30 +46,35 @@ t_VALENCIA= r'[1-9]'#Any digit from 0-9
 t_IDCONT = t_LETRA + r'|' + r'(' + t_LETRA + r')' + t_LETRA + r'|' + t_DIGITO + r'|' + r'(' + t_DIGITO + r')' + t_LETRA 
 t_ID = t_LETRA + r'|' + r'(' + t_LETRA + r')' + t_IDCONT
 
+    
+
 # Define a rule to handle whitespace
 t_ignore = ' \t\n'
 
 # Definir las reglas de produccion
 t_ELEMENTO= t_ELEMENTO_QUIMICO + r'|' + t_ELEMENTO_QUIMICO + r'(' + t_VALENCIA + r')'
-t_COMPUESTO=r'{t_ELEMENTO_QUIMICO} | {t_ELEMENTO_QUIMICO (t_VALENCIA)} | {t_ELEMENTO (t_GRUPO_FUNCIONAL)} | {t_ELEMENTO (t_GRUPO_FUNCIONAL)(t_ENLACE)} |{t_ELEMENTO (t_ENLACE)}'
 
-t_COMPUESTOS= t_COMPUESTO + r'('+ t_COMPUESTOS +r')'+ r'|'+ t_COMPUESTO
+t_COMPUESTO= t_ELEMENTO_QUIMICO+ r'|' +t_ELEMENTO_QUIMICO +r'('+t_VALENCIA+ r')' + r'|'+ t_ELEMENTO +r'('+t_GRUPO_FUNCIONAL+ r')' + r'|' +t_ELEMENTO +r'('+t_GRUPO_FUNCIONAL+r')'+r'('+t_ENLACE+r')'+ r'|'+t_ELEMENTO +r'('+t_ENLACE+r')'
 
+t_COMPUESTOS= t_COMPUESTO + r'('+ t_COMPUESTOS +r')'+ r'|' + t_COMPUESTO
 
-t_GRUPO_FUNCIONAL=r'{t_GRUPO_FUNCIONAL_INFERIOR(t_GRUPO_FUNCIONAL_SUPERIOR)} | {t_GRUPO_FUNCIONAL_SUPERIOR(t_GRUPO_FUNCIONAL_INFERIOR)} | ({t_MODELO_GRUPO_FUNCIONAL}) | [{t_MODELO_GRUPO_FUNCIONAL}]'
+t_MODELO_GRUPO_FUNCIONAL=t_ENLACE + r'('+t_MODELO_MOLECULAR+r')'+ r'|' +t_ELEMENTO_QUIMICO +r'|'+ t_ELEMENTO_QUIMICO +r'('+t_VALENCIA+r')'+ r'|'+ t_ELEMENTO+r'('+t_GRUPO_FUNCIONAL+r')'+ r'|' +t_COMPUESTO+r'('+t_ELEMENTO+r')'+ r'|' +t_COMPUESTO+r'('+t_ELEMENTO+r')'+r'('+t_GRUPO_FUNCIONAL+r')' +r'|'+ t_COMPUESTO+r'('+t_COMPUESTO+r')'+r'('+t_COMPUESTOS+r')'
 
-t_MODELO_MOLECULAR= t_ELEMENTO_QUIMICO + r'|' + t_ELEMENTO_QUIMICO + r'(' + t_VALENCIA + r')' + r'|' + t_ELEMENTO + r'(' + t_GRUPO_FUNCIONAL + r')' + r'|' + t_COMPUESTO + r'(' + t_GRUPO_FUNCIONAL+r')'+ r'|'+ t_COMPUESTO+ r'(' + t_ELEMENTO + r')' +r'('+ t_GRUPO_FUNCIONAL + r')'+ r'|'+ t_COMPUESTO + r'(' + t_COMPUESTO + r')' + r'(' + t_COMPUESTOS + r')'
- 
-t_MODELO_GRUPO_FUNCIONAL=t_ENLACE + (t_MODELO_MOLECULAR) | {t_ELEMENTO_QUIMICO} | {t_ELEMENTO_QUIMICO (t_VALENCIA)} | {t_ELEMENTO(t_GRUPO_FUNCIONAL)} | {t_COMPUESTO(t_ELEMENTO)} | {t_COMPUESTO(t_ELEMENTO)(t_GRUPO_FUNCIONAL)} | {t_COMPUESTO(t_COMPUESTO)(t_COMPUESTOS)}'
-
-t_GRUPO_FUNCIAL_INFERIOR= r'[' + t_MODELO_GRUPO_FUNCIONAL + r']'
+t_GRUPO_FUNCIONAL_INFERIOR= r'[' + t_MODELO_GRUPO_FUNCIONAL + r']'
 
 t_GRUPO_FUNCIONAL_SUPERIOR= r'(' + t_MODELO_GRUPO_FUNCIONAL + r')'
 
-t_SENTENCIA= r'defina' + r'(' + t_ID + r')' + r'como' + r'(' + t_TIPO + r'|' + t_ID + r')' + r'=' + r'('+ t_MODELO_MOLECULAR + r'|' {t_OPERACION}) ({ID})'
+t_GRUPO_FUNCIONAL=t_GRUPO_FUNCIONAL_INFERIOR+r'('+t_GRUPO_FUNCIONAL_SUPERIOR+ r')'  + r'|' + t_GRUPO_FUNCIONAL_SUPERIOR+r'('+t_GRUPO_FUNCIONAL_INFERIOR+r')' +r'|'+ r'('+t_MODELO_GRUPO_FUNCIONAL+r')'+ r'|' +r'['+t_MODELO_GRUPO_FUNCIONAL+r']'
 
-t_SENTENCIAS (t):
-    t_SENTENCIA (t_FIN_DE_LINEA)(t_SENTENCIAS) | t_SENTENCIA(t_FIN_DE_LINEA)
+t_MODELO_MOLECULAR= t_ELEMENTO_QUIMICO + r'|' + t_ELEMENTO_QUIMICO + r'(' + t_VALENCIA + r')' + r'|' + t_ELEMENTO + r'(' + t_GRUPO_FUNCIONAL + r')' + r'|' + t_COMPUESTO + r'(' + t_GRUPO_FUNCIONAL+r')'+ r'|'+ t_COMPUESTO+ r'(' + t_ELEMENTO + r')' +r'('+ t_GRUPO_FUNCIONAL + r')'+ r'|'+ t_COMPUESTO + r'(' + t_COMPUESTO + r')' + r'(' + t_COMPUESTOS + r')'
+ 
+
+
+
+t_SENTENCIA= r'defina' + r'(' + t_ID + r')' + r'como' + r'(' + t_TIPO + r'|' + t_ID + r')' + r'=' + r'('+ t_MODELO_MOLECULAR + r'|' +t_OPERACION+r')'+ r'('+t_ID+r')'
+
+t_SENTENCIAS = t_SENTENCIA + r'(' + t_FIN_DE_LINEA+r')'+r'('+t_SENTENCIAS+r')'+ r'|' +t_SENTENCIA+r'('+t_FIN_DE_LINEA+r')'
+
 
 # Define a function to handle errors
 def t_error(t):
