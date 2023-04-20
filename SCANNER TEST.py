@@ -10,8 +10,8 @@ tokens = (
     'TIPO',
     'ASIGNACION',
     'FIN_DE_LINEA',
-    'ELEMENTO_QUIMICO'
-    'OPERACION'
+    'ELEMENTO_QUIMICO',
+    'OPERACION',
     'PARAENTESIS_IZQ',
     'PARAENTESIS_DER',
     'PALABRAS_RESERVADAS',
@@ -61,13 +61,16 @@ t_COR_DER=r'\]'
 
 
 # Definir las reglas de produccion
+def p_start(p):
+    '''start : S'''
+    p[0] = p[1]
+    print("List of production rules:")
+    print(p.parser.rule_list)
 
 #S -> inicio sentencias fin (calls sentencia for the mIDdle content)
 def p_S(p):
     '''S : PALABRAS_RESERVADAS sentencias PALABRAS_RESERVADAS'''
-    print(p[0].slice)
-    
-    
+    p[0] = (p[1],p[2],p[3])
 
 #sentencias -> sentencia FIN_DE_LINEA sentencias (continues the code) | sentencia FIN_DE_LINEA (last statement)
 def p_sentencias(p):
@@ -134,23 +137,29 @@ def p_modelo_grupo_funcional(p):
                               | compuesto elemento grupo_funcional
                               | compuesto compuesto compuestos'''
 
-#<MODELO_GRUPO_FUNCIONAL>::=	<ENLACE>	<MODELO_MOLECULAR>	|	<ELEMENTO_QUIMICO>	|	<ELEMENTO_QUIMICO>	<VALENCIA>	|	<ELEMENTO>	<GRUPO_FUNCIONAL>	|	<COMPUESTO>	<ELEMENTO>	|	<COMPUESTO>	<ELEMENTO>	<GRUPO_FUNCIONAL>	|	<COMPUESTO>	<COMPUESTO>	<COMPUESTOS>
+#<ELEMENTO>::=	"<ELEMENTO_QUIMICO>	|	<ELEMENTO_QUIMICO>	<VALENCIA>
 
 def p_elemento(p):
     ''' elemento : ELEMENTO_QUIMICO
             | ELEMENTO_QUIMICO VALENCIA '''
-    
+
 
 # Define a function to handle errors
 def t_error(t):
      print(f"Error: Illegal character 't.value[0]'")
      t.lexer.skip(1)
+     
 # Define a rule to handle whitespace
 t_ignore = ' \t\n'
 
 # Error rule for syntax errors
 def p_error(p):
-    raise SyntaxError(f"Syntax error at line {p.lineno}, position {p.lexpos}: Unexpected token {p.value}")
+    if p:
+        print("Syntax error at line %d, column %d: Unexpected token %s" % (p.lineno, p.lexpos, p.value))
+    else:
+        print("Syntax error: Unexpected end of input")
+    
+# Build the lexer
 lexer = lex.lex()
 
 # Build the parser
@@ -164,7 +173,7 @@ lexer.input(i)
 for tok in lexer:
      print(tok)
 
-
+# Test the Parser
 while True:
     try:
        s = i
