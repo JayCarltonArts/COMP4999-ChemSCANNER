@@ -5,19 +5,19 @@ import re
 # Define the list of token names
 tokens = ( 
     'ID',
-    # 'VALENCIA',
-    # 'ENLACE',
+     'VALENCIA',
+     'ENLACE',
     'TIPO',
     'ASIGNACION',
      'FIN_DE_LINEA',
-    # 'ELEMENTO_QUIMICO',
+     'ELEMENTO_QUIMICO',
     'OPERACION',
     'PARAENTESIS_IZQ',
     'PARAENTESIS_DER',
     'PALABRAS_RESERVADAS',
-    'INICIO', 'DEFINA', 'COMO', 'FIN'
-#     'COR_IZQ',
-#     'COR_DER'
+    'INICIO', 'DEFINA', 'COMO', 'FIN',
+     'COR_IZQ',
+     'COR_DER'
  )
 
 # Define a regular expression
@@ -42,17 +42,27 @@ def t_PALABRAS_RESERVADAS(t):
         t.type = 'COMO'
     return t
 
+def t_ELEMENTO_QUIMICO(t):
+    r'Ag|Al|Ar|As|At|Au|Ba|Be|Bh|Bi|Br|Ca|Cd|Cl|Co|Cr|Cs|Cu|Db|Fe|Fr|Ga|Ge|He|Hf|Hg|Hn|Ir|Jl|Kr|Li|ln|Mg|Mn|Mo|Mt|Na|Nb|Ne|Ni|Os|Pb|Pd|Po|Pt|Ra|Rb|Re|Rf|Rh|Rn|Ru|Sb|Sc|Se|Si|Sn|Sr|Ta|Tc|Te|Ti|Tl|Xe|Zn|Zr|B|C|F|H|I|K|N|O|P|S|V|W|Y'
+    return t
+
 def t_OPERACION(t):
     r'graficar2d|graficar3d|pesomolecular'
     return t
+def t_VALENCIA(t):
+    r'[1-9]'
+    return t
+
 
 
 # Define the regular expression for each token
-t_FIN_DE_LINEA=r'\;|\:'
+t_FIN_DE_LINEA=r'\;'
 t_ID= r'[a-zA-Z][a-zA-Z0-9_]*'
-
+t_ENLACE=r'\-|\:\:|\:|\='
 t_PARAENTESIS_IZQ= r'\('
 t_PARAENTESIS_DER= r'\)'
+t_COR_IZQ=r'\['
+t_COR_DER=r'\]'
 
 # Define a function to handle errors
 def t_error(t):
