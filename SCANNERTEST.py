@@ -1,7 +1,5 @@
 import ply.lex as lex
-import ply.yacc as yacc
 
-import re
 # Define the list of token names
 tokens = ( 
     'ID',
@@ -66,8 +64,8 @@ t_COR_DER=r'\]'
 
 # Define a function to handle errors
 def t_error(t):
-     print(f"Error: Illegal character '{t.value[0]}'")
-     t.lexer.skip(1)
+    print(f"Error: Illegal character '{t.value[0]}'")
+    t.lexer.skip(1)
      
 # Define a rule to handle whitespace
 t_ignore = ' \t\n'
@@ -79,10 +77,10 @@ lexer = lex.lex()
 
 # # Test the lexer
 with open ('error_cases.txt','r') as file:
-     i = file.read()
+    i = file.read()
 
 lexer.input(i)
 for tok in lexer:
-     print(tok)
+    print(tok)
 
 

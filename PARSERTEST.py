@@ -1,5 +1,4 @@
 import ply.yacc as yacc
-import ply.lex as lex
 from prettytable import PrettyTable
 import SCANNERTEST
 
@@ -208,7 +207,7 @@ parser = yacc.yacc(debug=False)
 
 # Test the Parser
 with open ('error_cases.txt','r') as file:
-     i = file.read()
+    i = file.read()
 
 parser.parse(i)
 
