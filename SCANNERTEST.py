@@ -1,4 +1,5 @@
 import ply.lex as lex
+from prettytable import PrettyTable
 
 # Define the list of token names
 tokens = ( 
