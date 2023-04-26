@@ -80,7 +80,11 @@ with open ('error_cases.txt','r') as file:
     i = file.read()
 
 lexer.input(i)
+
+
+
+x = PrettyTable()
+x.field_names = ["Token", "Lexema","Linea","Columna"]
 for tok in lexer:
-    print(tok)
-
-
+    x.add_row(tok)
+print(x)
