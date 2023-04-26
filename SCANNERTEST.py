@@ -1,6 +1,5 @@
 import ply.lex as lex
 from prettytable import PrettyTable
-
 # Define the list of token names
 tokens = ( 
     'ID',
@@ -18,6 +17,17 @@ tokens = (
      'COR_IZQ',
      'COR_DER'
  )
+
+
+
+with open ('error_cases.txt','r') as file:
+    i = file.read()
+
+
+
+
+
+
 
 # Define a regular expression
 
@@ -67,9 +77,20 @@ t_COR_DER=r'\]'
 def t_error(t):
     print(f"Error: Illegal character '{t.value[0]}'")
     t.lexer.skip(1)
-     
+t_ignore = ' '     
+
+# Define a rule so we can track line numbers
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
+def find_column(i, t):
+    line_start = i.rfind('\n', 0, t.lexpos) + 1
+    return (t.lexpos - line_start) + 1
+
 # Define a rule to handle whitespace
-t_ignore = ' \t\n'
+
+
 
 # Build the lexer
 lexer = lex.lex()
@@ -77,15 +98,18 @@ lexer = lex.lex()
 
 
 # # Test the lexer
-with open ('error_cases.txt','r') as file:
-    i = file.read()
 
 lexer.input(i)
+tokens =[]
 
 
+for tok in lexer:
+    tokens.append((tok.type,tok.value,tok.lineno,tok.lexpos))
+    
 
 x = PrettyTable()
 x.field_names = ["Token", "Lexema","Linea","Columna"]
-for tok in lexer:
-    x.add_row(tok)
+for prod in tokens:
+    x.add_row(prod)
+
 print(x)
