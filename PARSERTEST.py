@@ -211,18 +211,15 @@ with open ('error_cases.txt','r') as file:
 
 parser.parse(i)
 
-# Write the table to the file
-
-with open("parserout", "w") as outfile:
+# Write the table to the terminal
 
 
     # Build the table
-    x = PrettyTable()
-    x.field_names = ["Izquierda", "Derecha"]
-    for prod in parsed_tokens:
-        x.add_row(prod)
+x = PrettyTable()
+x.field_names = ["Izquierda", "Derecha"]
+for prod in parsed_tokens:
+    x.add_row(prod)
 
     
-    outfile.write(str(x))
-    
+print(str(x))
     
