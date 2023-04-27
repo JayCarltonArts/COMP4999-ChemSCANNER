@@ -42,12 +42,14 @@ start = 'S'
 #S -> inicio sentencias fin (calls sentencia for the middle content)
 def p_S(p):
     '''S : INICIO sentencias FIN'''
+    
     format_table(p)
 
 #sentencias -> sentencia FIN_DE_LINEA sentencias (continues the code) | sentencia FIN_DE_LINEA (last statement)
 def p_sentencias(p):
     '''sentencias : sentencia FIN_DE_LINEA sentencias	
                   | sentencia FIN_DE_LINEA'''
+    p.set_lineno(0,p.lineno(2))
     format_table(p)        
 
 
@@ -135,20 +137,14 @@ def p_elemento(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    # raise SyntaxError(f"Syntax error at line {p.lineno}, position {p.lexpos}: Unexpected token {p.value}")
-    if p:
+    if p :
         print("Syntax error at line %d, column %d: Unexpected token %s" % (p.lineno, p.lexpos, p.value))
-        parser.errok()
     else:
         print("Syntax error: Unexpected end of input")
-    
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
+        exit()
+    parser.errok()
 
-def find_column(i, t):
-    line_start = i.rfind('\n', 0, t.lexpos) + 1
-    return (t.lexpos - line_start) + 1
+
 
 
 
