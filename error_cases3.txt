@@ -1,0 +1,4 @@
+inicio
+defina name como modelo;
+name := C;
+fin
