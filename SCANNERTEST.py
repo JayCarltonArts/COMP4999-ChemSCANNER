@@ -1,5 +1,6 @@
 import ply.lex as lex
 from prettytable import PrettyTable
+import sys
 # Define the list of token names
 tokens = ( 
     'ID',
@@ -20,7 +21,7 @@ tokens = (
 
 
 
-with open ('error_cases.txt','r') as file:
+with open (sys.argv[1],'r') as file:
     i = file.read()
 
 

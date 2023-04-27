@@ -2,7 +2,7 @@ import ply.yacc as yacc
 from prettytable import PrettyTable
 import SCANNERTEST
 import ply.lex as lex
-
+import sys
 tokens = ( 
     'ID',
      'VALENCIA',
@@ -32,7 +32,7 @@ def format_table(p):
 
 
 
-with open ('error_cases.txt','r') as file:
+with open (sys.argv[1],'r') as file:
     i = file.read()
 
 # Definir las reglas de produccion
