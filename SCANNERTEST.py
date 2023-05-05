@@ -25,11 +25,6 @@ with open (sys.argv[1],'r') as file:
     i = file.read()
 
 
-
-
-
-
-
 # Define a regular expression
 
 def t_ASIGNACION(t):
@@ -59,6 +54,7 @@ def t_ELEMENTO_QUIMICO(t):
 def t_OPERACION(t):
     r'graficar2d|graficar3d|pesomolecular'
     return t
+
 def t_VALENCIA(t):
     r'[1-9]'
     return t
@@ -89,8 +85,6 @@ def find_column(i, t):
     line_start = i.rfind('\n', 0, t.lexpos) + 1
     return (t.lexpos - line_start) + 1
 
-# Define a rule to handle whitespace
-
 
 
 # Build the lexer
@@ -98,7 +92,7 @@ lexer = lex.lex()
 
 
 
-# # Test the lexer
+# Test the lexer
 
 lexer.input(i)
 tokens =[]

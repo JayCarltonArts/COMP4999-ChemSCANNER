@@ -1,6 +1,6 @@
 import ply.yacc as yacc
 from prettytable import PrettyTable
-import SCANNERTEST
+from SCANNERTEST import tokens
 import ply.lex as lex
 import sys
 tokens = ( 
@@ -42,7 +42,8 @@ start = 'S'
 #S -> inicio sentencias fin (calls sentencia for the middle content)
 def p_S(p):
     '''S : INICIO sentencias FIN'''
-    
+    line   = p.lineno(1)        # line number of the PLUS token
+    index  = p.lexpos(1)        # Position of the PLUS token
     format_table(p)
 
 #sentencias -> sentencia FIN_DE_LINEA sentencias (continues the code) | sentencia FIN_DE_LINEA (last statement)
